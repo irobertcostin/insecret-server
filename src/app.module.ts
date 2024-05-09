@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+
+
 
 @Module({
   imports: [
@@ -13,6 +16,16 @@ import { UsersModule } from './users/users.module';
     }),
     MongooseModule.forRoot(process.env.MONGO_URI),
     UsersModule,
+    MailerModule.forRoot({
+      transport: {
+        service: "gmail",
+        host: "smtp.gmail.com",
+        auth: {
+          user: "ionrobert45@gmail.com",
+          pass: process.env.GMAIL_PASSWORD,
+        },
+      },
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
