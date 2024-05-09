@@ -17,6 +17,9 @@ export enum Category {
 
 
 export class User extends Document {
+    static findOneAndUpdate(arg0: { email: any; confirmationToken: string; }, arg1: { $unset: { confirmationToken: string; }; }) {
+        throw new Error('Method not implemented.');
+    }
     @Prop()
     gender: Category;
 
@@ -34,6 +37,12 @@ export class User extends Document {
 
     @Prop()
     avatar: string
+
+    @Prop({ default: null })
+    confirmationToken: string;
+
+    @Prop({ default: false })
+    isActivated: boolean;
 
 
 }

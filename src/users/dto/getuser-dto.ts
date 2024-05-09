@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator"
+import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 
 
@@ -9,10 +9,19 @@ export class GetUserDto {
     @IsString()
     readonly gender: string
 
+    @IsNotEmpty()
+    @IsString()
+    readonly birthday: string
+
 
     @IsNotEmpty()
     @IsString()
     readonly username: string
+
+    @IsNotEmpty()
+    @IsEmail()
+    readonly email: string
+
 
     @IsString()
     readonly avatar: string
