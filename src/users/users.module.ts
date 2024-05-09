@@ -25,7 +25,7 @@ import { ConfigService } from '@nestjs/config';
           }
         }
       }
-    })
+    }),
   ],
   exports: [JwtStrategy, PassportModule]
 })
