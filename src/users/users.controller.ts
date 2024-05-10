@@ -24,16 +24,25 @@ export class UsersController {
     register(
         @Body()
         createUserDto: CreateUserDto
-    ): Promise<{ user: CreateUserDto }> {
+    ): Promise<{ message: string }> {
         return this.userService.register(createUserDto)
     }
 
-    @Post('activate')
+    @Post('activate-account')
     activateAccount(
         @Body()
         body: ActivateUser
-    ): Promise<User> {
+    ): Promise<{ message: string }> {
         return this.userService.activateAccount(body);
+    }
+
+
+    @Post('resend-validation-token')
+    resendActivationToken(
+        @Body()
+        body: any
+    ): Promise<{ message: string }> {
+        return this.userService.resendActivationToken(body.email);
     }
 
 
