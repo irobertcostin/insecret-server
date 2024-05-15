@@ -8,12 +8,14 @@ import { UserSchema } from './schema/users.schema';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { TempPasswords, TempPasswordsSchema } from './schema/temp-passwords.schema';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy, UsernameInterceptor],
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: TempPasswords.name, schema: TempPasswordsSchema }]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],

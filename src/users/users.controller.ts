@@ -9,6 +9,8 @@ import { UsernameInterceptor } from 'src/interceptors/username.interceptor';
 import { Query as ExpressQuery } from "express-serve-static-core"
 import { ActivateUser } from './dto/activate-user.dto';
 import { User } from './schema/users.schema';
+import { PassResetDto } from './dto/pass-reset.dto';
+import { Throttle } from '@nestjs/throttler';
 
 
 @Controller('users')
@@ -20,6 +22,7 @@ export class UsersController {
 
     ) { }
 
+    @Throttle({ default: { limit: 1, ttl: 60000 } })
     @Post('register')
     register(
         @Body()
@@ -28,6 +31,7 @@ export class UsersController {
         return this.userService.register(createUserDto)
     }
 
+    @Throttle({ default: { limit: 10, ttl: 60000 } })
     @Post('activate-account')
     activateAccount(
         @Body()
@@ -36,7 +40,7 @@ export class UsersController {
         return this.userService.activateAccount(body);
     }
 
-
+    @Throttle({ default: { limit: 10, ttl: 60000 } })
     @Post('resend-validation-token')
     resendActivationToken(
         @Body()
@@ -47,15 +51,33 @@ export class UsersController {
 
 
 
-
+    @Throttle({ default: { limit: 10, ttl: 60000 } })
     @Post('login')
     login(
         @Body()
         loginUserDto: LoginUserDto
-    ): Promise<{ token: string }> {
+    ): Promise<any> {
         return this.userService.login(loginUserDto)
     }
 
+    @Throttle({ default: { limit: 10, ttl: 60000 } })
+    @Post('forgot-password')
+    forgotPassword(
+        @Body()
+        body: PassResetDto
+    ): Promise<any> {
+        return this.userService.forgotPassword(body)
+    }
+
+
+    @Throttle({ default: { limit: 10, ttl: 60000 } })
+    @Post('confirm-password-reset')
+    confirmPasswordReset(
+        @Body()
+        body: ActivateUser
+    ): Promise<any> {
+        return this.userService.confirmPasswordReset(body)
+    }
 
 
 }
