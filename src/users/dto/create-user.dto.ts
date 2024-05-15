@@ -20,18 +20,18 @@ export class CreateUserDto {
     readonly birthday: string
 
     @IsNotEmpty()
-    @MinLength(5, { message: "min. 5 letters" })
+    @MinLength(4, { message: "min. 4 litere" })
     @IsString()
     readonly username: string
 
     @IsNotEmpty()
-    @IsEmail({}, { message: 'This is not an email' })
+    @IsEmail({}, { message: 'Format email invalid' })
     readonly email: string
 
     @IsNotEmpty()
     @IsString()
     @MinLength(6)
-    @IsStrongPassword(passOptions, { message: "weak password" })
+    @IsStrongPassword(passOptions, { message: "Parola slaba" })
     readonly password: string
 
 
